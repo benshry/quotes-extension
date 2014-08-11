@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+
+  "name": "Testing",
+  "description": "Also testing",
+  "version": "1.0",
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "content_scripts": [
+    {
+    "matches": [
+      "http://*/*",
+      "https://*/*"
+      ],
+    "js": ["content.js"],
+    "run_at": "document_end"
+    }
+  ]
+}
