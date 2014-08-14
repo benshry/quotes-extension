@@ -1,7 +1,11 @@
-import json
-import urllib2
 from bs4 import BeautifulSoup
+import json
+import os
 import re
+import urllib2
+
+IN_PATH = 'tmp/quotes.txt'
+OUT_PATH = 'tmp/quotes_out.txt'
 
 def get_quotes(name, last_page):
   show_quotes = []
@@ -14,7 +18,15 @@ def get_quotes(name, last_page):
   return show_quotes
 
 if __name__ == '__main__':
-  all_quotes = {}
-  with open('out.txt', 'w') as out:
-    all_quotes['archer'] = get_quotes('archer', 23)
+  with open(IN_PATH, 'r') as input, open(OUT_PATH, 'w') as out:
+    all_quotes = {}
+    dict = json.load(input)
+    shows = [('archer', 23), ('arrested-development', 12)]
+    for show in shows:
+      if show[0] in dict.keys():
+        all_quotes[show[0]] = dict[show[0]]
+      else:
+        all_quotes[show] = get_quotes(show[0], show[1])
+
     json.dump(all_quotes, out)
+  os.rename(OUT_PATH, IN_PATH)
